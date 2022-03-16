@@ -1,0 +1,10 @@
+.gallery__element {
+    height: 361px;
+    width: 282px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+    align-self: center;
+  }
+  

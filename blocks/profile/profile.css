@@ -1,0 +1,31 @@
+.profile {
+    width: calc(100% - 400px);
+    margin: 0 auto;
+    display: flex;
+    min-height: 120px;
+    align-items: center;
+  }
+  
+  @media screen and (max-width: 1051px) {
+    .profile {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "profile__avatar"
+        "profile__info"
+        "profile__add-button";
+        justify-items: center;
+        min-width: 282px;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
