@@ -8,15 +8,6 @@
   width: 100vw;
   height: 100vh;
   display: none;
+  background-color: rgba(0, 0, 0, .5);
 }
 
-.popup::before {
-  background-color: #000000;
-  content: "";
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  right: 0;
-  opacity: 0.5;
-}

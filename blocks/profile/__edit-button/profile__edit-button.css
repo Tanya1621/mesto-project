@@ -5,12 +5,13 @@
   background-size: 10px 10px;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #000000;
+  background-color: transparent;
   border: 1px solid #fff;
   grid-column: 2;
   grid-row: 1;
   margin-top: 37px;
   transition: opacity 0.3s ease;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1051px) {
