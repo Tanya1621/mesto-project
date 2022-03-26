@@ -1,17 +1,37 @@
 let popup = document.querySelector('.popup');
+let popupImage = document.querySelector('.popup-image');
 let edit = document.querySelector('.profile__edit-button');
 let close = document.querySelector('.popup__close-icon');
+let closeImage = document.querySelector('.popup-image__close-icon');
+const add = document.querySelector('.profile__add-button');
 // открытие попап
 function openPopup() {
     popup.classList.add('popup_opened');
 }
 edit.addEventListener('click', openPopup);
 
+//image
+function openPopupImage() {
+    popupImage.classList.add('popup_opened');
+}
+add.addEventListener('click', openPopupImage);
+
+
+
+
 // закрытие попап
 function closePopup() {
     popup.classList.remove('popup_opened');
 }
+
+function closePopupImage() {
+    popupImage.classList.remove('popup_opened');
+}
 close.addEventListener('click', closePopup);
+closeImage.addEventListener('click', closePopupImage);
+
+
+
 
 // обновление информации в профиле
 const formElement = document.querySelector('.popup__form');
