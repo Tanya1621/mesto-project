@@ -1,0 +1,50 @@
+.popup-fullscreen {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  z-index: 10;
+}
+.popup-fullscreen_opened {
+    display: flex;
+}
+
+.popup-fullscreen__figure {
+margin: 0;
+}
+
+.popup-fullscreen_container {
+    margin: 0 auto;
+    position: relative;
+}
+.popup-fullscreen__image {
+  max-height: 75vw;
+  max-height: 75vh;
+  margin: 0;
+  bottom: 0;
+}
+
+.popup-fullscreen__close-icon {
+  position: absolute;
+  background-size: contain;
+  background-image: url(../../images/Close-Icon.svg);
+  background-color: transparent;
+  width: 32px;
+  height: 32px;
+  top: -40px;
+  right: -40px;
+  border: none;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.popup-fullscreen__image__capture {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    color: white;
+}
