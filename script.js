@@ -23,14 +23,14 @@ const jobInput = document.querySelector(".popup__field_value_occupation");
 let profileName = document.querySelector(".profile__name");
 let profileOccupaton = document.querySelector(".profile__occupation");
 
-// открытие попап
+// открытие попап c редактированием
 
 function openPopup() {
   popup.classList.add("popup_opened");
 }
 edit.addEventListener("click", openPopup);
 
-//image
+//открытие попап добавления картинки
 function openPopupImage() {
   popupImage.classList.add("popup_opened");
 }
@@ -54,6 +54,13 @@ close.forEach(function (cl) {
   cl.addEventListener("click", closePopupImage);
 });
 
+// установка начальных данных в попапе для редактирования профиля
+function initInfo() {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileOccupaton.textContent;
+}
+initInfo();
+
 // обновление информации в профиле
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -63,6 +70,18 @@ function formSubmitHandler(evt) {
 }
 
 formElement.addEventListener("submit", formSubmitHandler);
+
+// функция для открытия попап с картинкой
+
+function openFullsreen(element) {
+  const galleryImage = element.querySelector(".gallery__image");
+  galleryImage.addEventListener("click", function () {
+    popupFullscreen.classList.add("popup_opened");
+    const galleryTitle = element.querySelector(".gallery__title").textContent;
+    FullscreenImage.src = galleryImage.src;
+    popupFullscreenCap.textContent = galleryTitle;
+  });
+}
 
 // Добавление карточек
 
@@ -109,8 +128,9 @@ function initCard(image, title) {
   deleteButton.addEventListener("click", function () {
     galleryElement.remove();
   });
-
+  // открытие попапа с изображением
   openFullsreen(galleryElement);
+  // добавление карточки в галерею
   gallery.append(galleryElement);
 }
 
@@ -134,16 +154,4 @@ formElementImage.addEventListener("submit", createCard);
 // инициализация карт
 for (let i = 0; i < initialCards.length; i++) {
   initCard(initialCards[i].link, initialCards[i].name);
-}
-
-// открытие попап с картинкой
-
-function openFullsreen(element) {
-  const galleryImage = element.querySelector(".gallery__image");
-  galleryImage.addEventListener("click", function () {
-    popupFullscreen.classList.add("popup_opened");
-    const galleryTitle = element.querySelector(".gallery__title").textContent;
-    FullscreenImage.src = galleryImage.src;
-    popupFullscreenCap.textContent = galleryTitle;
-  });
 }
