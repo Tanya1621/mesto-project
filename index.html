@@ -14,18 +14,18 @@
     <main>
       <section class="profile">
         <img
-          src="./images/avatar.jpg"
+          src="./images/slider_3.jpg"
           alt="Фото профиля"
           class="profile__avatar"
         />
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name">Пирожок</h1>
           <button
             aria-label="Редактировать"
             type="button"
             class="profile__edit-button"
           ></button>
-          <p class="profile__occupation">Исследователь океана</p>
+          <p class="profile__occupation">Пушистый Исследователь</p>
         </div>
         <button
           aria-label="Добавить"
@@ -33,75 +33,23 @@
           class="profile__add-button"
         ></button>
       </section>
-      <section class="gallery">
-        <div class="gallery__element">
-          <img
-            src="./images/kushtau.png"
-            alt="Пейзаж шихана Куштау"
-            class="gallery__image"
-          />
-          <div class="gallery__card-info">
-            <h2 class="gallery__title">Шихан Куштау</h2>
-            <button type="button" class="gallery__like"></button>
+      <section class="gallery" aria-label="Галерея">
+        <template id="gallery-item">
+          <div class="gallery__element">
+            <img
+              src="./images/kushtau.png"
+              alt="Пейзаж шихана Куштау"
+              class="gallery__image"
+            />
+            <button type="button" class="gallery__delete"></button>
+            <div class="gallery__card-info">
+              <h2 class="gallery__title">Шихан Куштау</h2>
+              <button type="button" class="gallery__like"></button>
+            </div>
           </div>
-        </div>
-        <div class="gallery__element">
-          <img
-            src="./images/elbrus.jpeg"
-            alt="Заснеженный пик Эльбруса: ночной пейзаж"
-            class="gallery__image"
-          />
-          <div class="gallery__card-info">
-            <h2 class="gallery__title">Гора Эльбрус</h2>
-            <button type="button" class="gallery__like"></button>
-          </div>
-        </div>
-        <div class="gallery__element">
-          <img
-            src="./images/baikal-2.jpeg"
-            alt="Лед в трещинах на озере Байкал"
-            class="gallery__image"
-          />
-          <div class="gallery__card-info">
-            <h2 class="gallery__title">Озеро Байкал</h2>
-            <button type="button" class="gallery__like"></button>
-          </div>
-        </div>
-        <div class="gallery__element">
-          <img
-            src="./images/kaliningrad.jpeg"
-            alt="Фотография Калининграда с высоты"
-            class="gallery__image"
-          />
-          <div class="gallery__card-info">
-            <h2 class="gallery__title">Город Калининград</h2>
-            <button type="button" class="gallery__like"></button>
-          </div>
-        </div>
-        <div class="gallery__element">
-          <img
-            src="./images/spb2.jpeg"
-            alt="Фото с высоты: вид на Исаакиевский собор с подсветкой"
-            class="gallery__image"
-          />
-          <div class="gallery__card-info">
-            <h2 class="gallery__title">Город Санкт-Петербург</h2>
-            <button type="button" class="gallery__like"></button>
-          </div>
-        </div>
-        <div class="gallery__element">
-          <img
-            src="./images/kazan.jpeg"
-            alt="Ночное фото Казани. Казанский кремль"
-            class="gallery__image"
-          />
-          <div class="gallery__card-info">
-            <h2 class="gallery__title">Город Казань</h2>
-            <button type="button" class="gallery__like"></button>
-          </div>
-        </div>
+        </template>
       </section>
-      <div class="popup popup_opened">
+      <div class="popup">
         <div class="popup__container">
           <button
             aria-label="Закрыть"
@@ -116,23 +64,74 @@
                   name="user-name"
                   type="text"
                   class="popup__field popup__field_value_name"
-                  value="Жак-Ив Кусто"
+                  value=""
                 />
                 <input
                   name="user-occupation"
                   type="text"
                   class="popup__field popup__field_value_occupation"
-                  value="Исследователь океана"
+                  value=""
                 />
               </fieldset>
+              <button type="submit" class="popup__send">Сохранить</button>
             </form>
-            <button type="submit" class="popup__send">Сохранить</button>
           </div>
+        </div>
+      </div>
+      <div class="popup popup_image">
+        <div class="popup__container">
+          <button
+            aria-label="Закрыть"
+            type="button"
+            class="popup__close-icon"
+          ></button>
+          <div class="popup__content">
+            <h2 class="popup__title">Новое место</h2>
+            <form
+              name="image-data"
+              method="get"
+              class="popup__form popup-image__form"
+            >
+              <fieldset class="popup__edit-profile">
+                <input
+                  name="place-name"
+                  type="text"
+                  class="popup__field popup__field_value_place-name"
+                  value=""
+                  placeholder="Название"
+                />
+                <input
+                  name="place-link"
+                  type="text"
+                  class="popup__field popup__field_value_place-link"
+                  value=""
+                  placeholder="Ссылка на картинку"
+                />
+              </fieldset>
+              <button type="submit" class="popup__send">Сохранить</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="popup popup_fullscreen">
+        <div class="popup_fullscreen__container">
+          <button
+            aria-label="Закрыть"
+            type="button"
+            class="popup__close-icon"
+          ></button>
+          <figure class="popup_fullscreen__figure">
+            <img class="popup_fullscreen__image" src="./images/baikal.jpeg" />
+            <figcaption class="popup_fullscreen__image-capture">
+              Name place
+            </figcaption>
+          </figure>
         </div>
       </div>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
+    <script src="./script.js"></script>
   </body>
 </html>

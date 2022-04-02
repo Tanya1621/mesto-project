@@ -7,7 +7,10 @@
   left: 0px;
   width: 100vw;
   height: 100vh;
-  display: none;
   background-color: rgba(0, 0, 0, .5);
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .5s, visibility .5s ease-in-out;
 }
 
