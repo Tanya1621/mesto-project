@@ -29,9 +29,8 @@ function openPopup(popup) {
 }
 // открытие попап c редактированием
 profileEditButton.addEventListener("click", function () {
-  openPopup(popupEdit, function () {
-    initInfo();
-  });
+  openPopup(popupEdit);
+  initInfo();
 })
 
 //открытие попап добавления картинки
@@ -62,7 +61,6 @@ function initInfo() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileOccupaton.textContent;
 }
-initInfo();
 
 // обновление информации в профиле
 function editProfileInfo(evt) {
