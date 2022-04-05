@@ -1,26 +1,26 @@
 const initialCards = [
   {
-    name: "Шихан Куштау",
+    name: "Kushtau",
     link: "./images/kushtau.png",
   },
   {
-    name: "Гора Эльбрус",
+    name: "Mount Elbrus",
     link: "./images/elbrus.jpeg",
   },
   {
-    name: "Озеро Байкал",
+    name: "Lake Baikal",
     link: "./images/baikal-2.jpeg",
   },
   {
-    name: "Город Калининград",
+    name: "Kaliningrad",
     link: "./images/kaliningrad.jpeg",
   },
   {
-    name: "Город Санкт-Петербург",
+    name: "Saint-Petersburg",
     link: "./images/spb2.jpeg",
   },
   {
-    name: "Город Казань",
+    name: "Kazan",
     link: "./images/kazan.jpeg",
   },
 ];

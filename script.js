@@ -47,7 +47,7 @@ function closePopup(popup) {
 closeButtons.forEach(function (cl) {
   cl.addEventListener("click", function () {
     const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
+    closePopup(openedPopup); 
   });
 });
 
