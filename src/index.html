@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mesto</title>
+
+</head>
+<body class="page">
+<header class="header">
+    <img src="<%=require('./images/logo.svg')%>" alt="Логотип Место" class="header__logo"/>
+</header>
+<main>
+    <section class="profile">
+        <img
+                src="<%=require('./images/slider_3.jpg')%>"
+                alt="Фото профиля"
+                class="profile__avatar"
+        />
+        <div class="profile__info">
+            <h1 class="profile__name">Пирожок</h1>
+            <button
+                    aria-label="Редактировать"
+                    type="button"
+                    class="profile__edit-button"
+            ></button>
+            <p class="profile__occupation">Пушистый Исследователь</p>
+        </div>
+        <button
+                aria-label="Добавить"
+                type="button"
+                class="profile__add-button"
+        ></button>
+    </section>
+    <section class="gallery" aria-label="Галерея">
+        <template id="gallery-item">
+            <div class="gallery__element">
+                <img
+                        src="images/kushtau.png"
+                        alt="Пейзаж шихана Куштау"
+                        class="gallery__image"
+                />
+                <button type="button" class="gallery__delete"></button>
+                <div class="gallery__card-info">
+                    <h2 class="gallery__title">Шихан Куштау</h2>
+                    <button type="button" class="gallery__like"></button>
+                </div>
+            </div>
+        </template>
+    </section>
+    <div class="popup popup_edit">
+        <div class="popup__container">
+            <button
+                    aria-label="Закрыть"
+                    type="button"
+                    class="popup__close-icon"
+            ></button>
+            <div class="popup__content">
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <form name="user-data" method="get" class="popup__form" novalidate>
+                    <fieldset class="popup__edit-profile">
+                        <label><input
+                                id="user-name"
+                                name="user-name"
+                                type="text"
+                                class="popup__field popup__field_value_name"
+                                value=""
+                                minlength="2"
+                                maxlength="40"
+                                required
+                        /></label>
+                        <span class="user-name-error popup__input-error"></span>
+                        <label><input
+                                id="user-occupation"
+                                name="user-occupation"
+                                type="text"
+                                class="popup__field popup__field_value_occupation"
+                                value=""
+                                minlength="2"
+                                maxlength="200"
+                                required
+                        /></label>
+                        <span class="popup__input-error user-occupation-error"></span>
+                    </fieldset>
+                    <button type="submit" class="popup__send">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup_image">
+        <div class="popup__container">
+            <button
+                    aria-label="Закрыть"
+                    type="button"
+                    class="popup__close-icon"
+            ></button>
+            <div class="popup__content">
+                <h2 class="popup__title">Новое место</h2>
+                <form
+                        name="image-data"
+                        method="get"
+                        class="popup__form popup-image__form"
+                >
+                    <fieldset class="popup__edit-profile">
+                        <label><input
+                                id="place-name"
+                                name="place-name"
+                                type="text"
+                                class="popup__field popup__field_value_place-name"
+                                value=""
+                                placeholder="Название"
+                                minlength="2"
+                                maxlength="40"
+                                required
+                        /></label>
+                        <span class="popup__input-error place-name-error"></span>
+                        <label><input
+                                id="place-link"
+                                name="place-link"
+                                type="url"
+                                class="popup__field popup__field_value_place-link"
+                                value=""
+                                placeholder="Ссылка на картинку"
+                                required
+                        /></label>
+                        <span class="popup__input-error place-link-error"></span>
+                    </fieldset>
+                    <button type="submit" class="popup__send">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup_fullscreen">
+        <div class="popup_fullscreen__container">
+            <button
+                    aria-label="Закрыть"
+                    type="button"
+                    class="popup__close-icon"
+            ></button>
+            <figure class="popup_fullscreen__figure">
+                <img class="popup_fullscreen__image" alt="из карточки" src="<%=require('./images/baikal.jpeg')%>" />
+                <figcaption class="popup_fullscreen__image-capture">
+                    Name place
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+</footer>
+</body>
+</html>
