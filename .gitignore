@@ -1,2 +1,10 @@
 node_modules
 dist
+src/.DS_Store
+src/blocks/.DS_Store
+src/blocks/popup/.DS_Store
+src/components/.DS_Store
+src/images/.DS_Store
+src/pages/.DS_Store
+src/vendor/.DS_Store
+src/vendor/Inter/.DS_Store
