@@ -1,10 +1,11 @@
-const popup = document.querySelector(".popup");
+const popupEdit = document.querySelector(".popup_edit");
+const popups = document.querySelectorAll('.popup');
 const popupImage = document.querySelector(".popup_image");
 const edit = document.querySelector(".profile__edit-button");
 const close = document.querySelectorAll(".popup__close-icon");
 const add = document.querySelector(".profile__add-button");
 const popupFullscreen = document.querySelector(".popup_fullscreen");
-const galleryItem = document.querySelectorAll(".gallery__element");
+
 const popupFullscreenCap = document.querySelector(
   ".popup_fullscreen__image-capture"
 );
@@ -13,20 +14,32 @@ const placeNameInput = document.querySelector(".popup__field_value_place-name");
 const placeLinkInput = document.querySelector(".popup__field_value_place-link");
 const formElementImage = document.querySelector(".popup-image__form");
 const galleryTemplate = document.querySelector("#gallery-item").content;
-const galleryElement = galleryTemplate
-  .querySelector(".gallery__element")
-  .cloneNode(true);
+
 const gallery = document.querySelector(".gallery");
 const formElement = document.querySelector(".popup__form");
 const nameInput = document.querySelector(".popup__field_value_name");
 const jobInput = document.querySelector(".popup__field_value_occupation");
 let profileName = document.querySelector(".profile__name");
-let profileOccupaton = document.querySelector(".profile__occupation");
+let profileOccupation = document.querySelector(".profile__occupation");
+
+
+popups.forEach ((popup) => {
+  window.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
+      popup.classList.remove("popup_opened");
+    }
+  });
+  window.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup') && popup.classList.contains('popup_opened')) {
+      popup.classList.remove("popup_opened");
+    }
+  })
+})
 
 // открытие попап c редактированием
 
 function openPopup() {
-  popup.classList.add("popup_opened");
+  popupEdit.classList.add("popup_opened");
 }
 edit.addEventListener("click", openPopup);
 
@@ -38,7 +51,7 @@ add.addEventListener("click", openPopupImage);
 
 // закрытие попап
 function closePopup() {
-  popup.classList.remove("popup_opened");
+  popupEdit.classList.remove("popup_opened");
 }
 
 function closePopupImage() {
@@ -57,7 +70,7 @@ close.forEach(function (cl) {
 // установка начальных данных в попапе для редактирования профиля
 function initInfo() {
   nameInput.value = profileName.textContent;
-  jobInput.value = profileOccupaton.textContent;
+  jobInput.value = profileOccupation.textContent;
 }
 initInfo();
 
@@ -65,7 +78,7 @@ initInfo();
 function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
-  profileOccupaton.textContent = jobInput.value;
+  profileOccupation.textContent = jobInput.value;
   closePopup();
 }
 
@@ -73,7 +86,8 @@ formElement.addEventListener("submit", formSubmitHandler);
 
 // функция для открытия попап с картинкой
 
-function openFullsreen(element) {
+
+function openFullscreen(element) {
   const galleryImage = element.querySelector(".gallery__image");
   galleryImage.addEventListener("click", function () {
     popupFullscreen.classList.add("popup_opened");
@@ -129,7 +143,7 @@ function initCard(image, title) {
     galleryElement.remove();
   });
   // открытие попапа с изображением
-  openFullsreen(galleryElement);
+  openFullscreen(galleryElement);
   // добавление карточки в галерею
   gallery.append(galleryElement);
 }
@@ -155,3 +169,84 @@ formElementImage.addEventListener("submit", createCard);
 for (let i = 0; i < initialCards.length; i++) {
   initCard(initialCards[i].link, initialCards[i].name);
 }
+
+//закрытие попапа на esc
+
+
+//Form validation
+
+
+const showError = (formElement, inputElement, errorMessage, object) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(object.errorClass);
+  inputElement.classList.add(object.inputErrorClass);
+
+}
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some(function(element) {
+    return !element.validity.valid;
+})}
+
+  const toggleButtonState = (inputList, buttonElement, object) => {
+    if (hasInvalidInput(inputList)) {
+      buttonElement.classList.add(object.inactiveButtonClass);
+      buttonElement.disabled = true;
+    }
+    else {
+      buttonElement.classList.remove(object.inactiveButtonClass);
+      buttonElement.disabled = false;
+    }
+  }
+
+const hideError = (formElement, inputElement, object) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(object.inputErrorClass);
+  errorElement.classList.remove(object.errorClass);
+  errorElement.textContent = '';
+}
+
+
+const checkInputValidity = (formElement, inputElement, object) => {
+  if(inputElement.validity.valid) {
+    hideError(formElement, inputElement, object);
+  }
+  else{
+    showError(formElement, inputElement, inputElement.validationMessage, object);
+  }
+}
+
+
+function setEventListeners(formElement, object) {
+  const inputList = Array.from(formElement.querySelectorAll(object.inputSelector));
+  const buttonElement = formElement.querySelector(object.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, object);
+  inputList.forEach ((inputElement)=> {
+    inputElement.addEventListener('input', ()=> {
+      checkInputValidity(formElement, inputElement, object);
+      toggleButtonState(inputList, buttonElement, object);
+    })
+  })
+}
+
+
+function enableValidation (object) {
+  const formList = Array.from(document.querySelectorAll(object.formSelector));
+  formList.forEach((formElement)=> {
+    formElement.addEventListener('submit', (evt)=> {
+      evt.preventDefault();
+    })
+    setEventListeners(formElement, object);
+  })
+}
+
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__field',
+  submitButtonSelector: '.popup__send',
+  inactiveButtonClass: 'popup__send_disabled',
+  inputErrorClass: 'popup__field_type_error',
+  errorClass: 'popup__input-error_active'
+});

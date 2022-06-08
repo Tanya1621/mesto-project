@@ -17,9 +17,12 @@
       line-height: 16.94px;
       font-size: 14px;
       height: 46px;
+        transition: opacity 0.2s ease;
     }
   }
   
   .popup__send:hover {
     opacity: 0.8;
   }
+
+
