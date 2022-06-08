@@ -1,0 +1,6 @@
+.DS_Store
+vendor/.DS_Store
+vendor/Inter/.DS_Store
+.idea/
+dist/
+node_modules/
