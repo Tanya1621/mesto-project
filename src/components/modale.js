@@ -1,24 +1,26 @@
-import {
-    nameInput,
-    jobInput,
-    profileName,
-    profileOccupaton,
-    popupEdit,
-    FullscreenImage,
-    popupFullscreen,
-    popupFullscreenCap
-} from "./vars.js";
+import {jobInput, nameInput, popupEdit, profileName, profileOccupaton} from "./vars.js";
+
+//закрытие на Esc
+function closeByEsc(evt) {
+    if(evt.key === 'Escape'){
+        const openedPopup = document.querySelector('.popup_opened');
+        closePopup(openedPopup);
+    }
+}
 
 
 // открытие попап
 function openPopup(popup) {
     popup.classList.add("popup_opened");
+    document.addEventListener('keydown', closeByEsc);
+
 }
 
 
 // закрытие попап
 function closePopup(popup) {
     popup.classList.remove("popup_opened");
+    document.removeEventListener('keydown', closeByEsc);
 }
 
 
@@ -37,17 +39,4 @@ function editProfileInfo(evt) {
 }
 
 
-// функция для открытия попап с картинкой
-
-function openFullsreen(element) {
-    const galleryImage = element.querySelector(".gallery__image");
-    galleryImage.addEventListener("click", function () {
-        openPopup(popupFullscreen);
-        const galleryTitle = element.querySelector(".gallery__title").textContent;
-        FullscreenImage.src = galleryImage.src;
-        FullscreenImage.alt = galleryImage.alt;
-        popupFullscreenCap.textContent = galleryTitle;
-    });
-}
-
-export {openFullsreen, closePopup, initInfo, editProfileInfo, openPopup}
+export {closePopup, initInfo, editProfileInfo, openPopup}

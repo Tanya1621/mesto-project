@@ -24,42 +24,47 @@ const initialCards = [{
 const popupEdit = document.querySelector(".popup_edit");
 const popupImage = document.querySelector(".popup_image");
 const profileEditButton = document.querySelector(".profile__edit-button");
-const closeButtons = document.querySelectorAll(".popup__close-icon");
 const addButton = document.querySelector(".profile__add-button");
 const popupFullscreen = document.querySelector(".popup_fullscreen");
 const popupFullscreenCap = document.querySelector(".popup_fullscreen__image-capture");
-const FullscreenImage = document.querySelector(".popup_fullscreen__image");
+const fullscreenImage = document.querySelector(".popup_fullscreen__image");
 const placeNameInput = document.querySelector(".popup__field_value_place-name");
 const placeLinkInput = document.querySelector(".popup__field_value_place-link");
 const formElementImage = document.querySelector(".popup-image__form");
 const galleryTemplate = document.querySelector("#gallery-item").content;
 const gallery = document.querySelector(".gallery");
-const formElement = document.querySelector(".popup__form");
+const profileFormElement = document.querySelector(".popup__form_profile");
 const nameInput = document.querySelector(".popup__field_value_name");
 const jobInput = document.querySelector(".popup__field_value_occupation");
 const profileName = document.querySelector(".profile__name");
 const profileOccupaton = document.querySelector(".profile__occupation");
 const popups = document.querySelectorAll('.popup');
-
+const object = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__field',
+    submitButtonSelector: '.popup__send',
+    inactiveButtonClass: 'popup__send_disabled',
+    inputErrorClass: 'popup__field_type_error',
+    errorClass: 'popup__input-error_active'
+};
 export {
     initialCards,
     popupEdit,
     popupImage,
     profileEditButton,
-    closeButtons,
     addButton,
     popupFullscreen,
     popupFullscreenCap,
-    FullscreenImage,
+    fullscreenImage,
     placeNameInput,
     placeLinkInput,
     galleryTemplate,
     formElementImage,
     gallery,
-    formElement,
+    profileFormElement,
     nameInput,
     jobInput,
     profileName,
     profileOccupaton,
-    popups
+    popups, object
 }

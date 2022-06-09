@@ -1,13 +1,37 @@
-import {galleryTemplate, gallery, placeNameInput, placeLinkInput, popupImage} from "./vars.js";
-import {closePopup, openFullsreen} from "./modale.js";
+import {
+    fullscreenImage,
+    gallery,
+    galleryTemplate,
+    object,
+    placeLinkInput,
+    placeNameInput,
+    popupFullscreen,
+    popupFullscreenCap,
+    popupImage
+} from "./vars.js";
+import {closePopup, openPopup} from "./modale.js";
+import {enableValidation} from "./validate";
 
-// Добавление карточек
-function initCard(image, title) {
+// функция для открытия попап с картинкой
+
+function setImageHandler(element) {
+    const galleryImage = element.querySelector(".gallery__image");
+    galleryImage.addEventListener("click", function () {
+        openPopup(popupFullscreen);
+        const galleryTitle = element.querySelector(".gallery__title").textContent;
+        fullscreenImage.src = galleryImage.src;
+        fullscreenImage.alt = galleryImage.alt;
+        popupFullscreenCap.textContent = galleryTitle;
+    });
+}
+
+function createCard(image, title) {
     const galleryElement = galleryTemplate
         .querySelector(".gallery__element")
         .cloneNode(true);
     galleryElement.querySelector(".gallery__image").src = image;
     galleryElement.querySelector(".gallery__title").textContent = title;
+    galleryElement.querySelector(".gallery__image").alt = title;
     const heart = galleryElement.querySelector(".gallery__like");
     // добавление лайков
     heart.addEventListener("click", function () {
@@ -19,20 +43,27 @@ function initCard(image, title) {
         galleryElement.remove();
     });
     // открытие попапа с изображением
-    openFullsreen(galleryElement);
-    // добавление карточки в галерею
-    gallery.append(galleryElement);
+    setImageHandler(galleryElement);
+    return galleryElement;
+}
+// Добавление карточек
+function prependCard(image, title) {
+   const galleryElement = createCard(image, title);
+    gallery.prepend(galleryElement);
 }
 
 //  создание карточки
-function createCard(evt) {
+function handleCardFormSubmit(evt) {
     evt.preventDefault();
     const name = placeNameInput.value;
     const link = placeLinkInput.value;
-    initCard(link, name);
-    placeNameInput.value = "";
-    placeLinkInput.value = "";
+    prependCard(link, name);
+    evt.target.reset();
     closePopup(popupImage);
+    enableValidation(object);
 }
 
-export {createCard, initCard}
+
+
+export {handleCardFormSubmit, prependCard}
+export {setImageHandler};
