@@ -1,8 +1,8 @@
-import {jobInput, nameInput, popupEdit, profileName, profileOccupaton} from "./vars.js";
+import {jobInput, nameInput, object, popupEdit, profileName, profileOccupaton} from "./vars.js";
 
 //закрытие на Esc
 function closeByEsc(evt) {
-    if(evt.key === 'Escape'){
+    if (evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_opened');
         closePopup(openedPopup);
     }
@@ -38,5 +38,10 @@ function editProfileInfo(evt) {
     closePopup(popupEdit);
 }
 
+function inactivateButton(popup) {
+    const sendButton = popup.querySelector('.popup__send');
+    sendButton.classList.add(object.inactiveButtonClass);
+    sendButton.disabled = true;
+}
 
-export {closePopup, initInfo, editProfileInfo, openPopup}
+export {closePopup, initInfo, editProfileInfo, openPopup, inactivateButton}

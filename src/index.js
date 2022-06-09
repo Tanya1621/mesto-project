@@ -33,18 +33,16 @@ addButton.addEventListener("click", function () {
 });
 
 //закрытие оверлей или крестик
-    popups.forEach((popup)=> {
-        popup.addEventListener('mousedown', (evt) => {
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
         if (evt.target.classList.contains('popup')) {
             closePopup(popup);
         }
-            if (evt.target.classList.contains('popup__close-icon')) {
-                closePopup(popup)
-            }
+        if (evt.target.classList.contains('popup__close-icon')) {
+            closePopup(popup)
+        }
     })
 })
-
-
 
 
 profileFormElement.addEventListener("submit", editProfileInfo);

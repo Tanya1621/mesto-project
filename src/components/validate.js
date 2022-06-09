@@ -7,17 +7,17 @@ const showError = (formElement, inputElement, errorMessage, object) => {
 }
 
 const hasInvalidInput = (inputList) => {
-    return inputList.some(function(element) {
+    return inputList.some(function (element) {
         return !element.validity.valid;
-    })}
+    })
+}
 
 
 const toggleButtonState = (inputList, buttonElement, object) => {
     if (hasInvalidInput(inputList)) {
         buttonElement.classList.add(object.inactiveButtonClass);
         buttonElement.disabled = true;
-    }
-    else {
+    } else {
         buttonElement.classList.remove(object.inactiveButtonClass);
         buttonElement.disabled = false;
     }
@@ -32,10 +32,9 @@ const hideError = (formElement, inputElement, object) => {
 
 
 const checkInputValidity = (formElement, inputElement, object) => {
-    if(inputElement.validity.valid) {
+    if (inputElement.validity.valid) {
         hideError(formElement, inputElement, object);
-    }
-    else{
+    } else {
         showError(formElement, inputElement, inputElement.validationMessage, object);
     }
 }
@@ -45,8 +44,8 @@ function setEventListeners(formElement, object) {
     const inputList = Array.from(formElement.querySelectorAll(object.inputSelector));
     const buttonElement = formElement.querySelector(object.submitButtonSelector);
     toggleButtonState(inputList, buttonElement, object);
-    inputList.forEach ((inputElement)=> {
-        inputElement.addEventListener('input', ()=> {
+    inputList.forEach((inputElement) => {
+        inputElement.addEventListener('input', () => {
             checkInputValidity(formElement, inputElement, object);
             toggleButtonState(inputList, buttonElement, object);
         })
@@ -54,10 +53,10 @@ function setEventListeners(formElement, object) {
 }
 
 
-function enableValidation (object) {
+function enableValidation(object) {
     const formList = Array.from(document.querySelectorAll(object.formSelector));
-    formList.forEach((formElement)=> {
-        formElement.addEventListener('submit', (evt)=> {
+    formList.forEach((formElement) => {
+        formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
         })
         setEventListeners(formElement, object);

@@ -2,15 +2,13 @@ import {
     fullscreenImage,
     gallery,
     galleryTemplate,
-    object,
     placeLinkInput,
     placeNameInput,
     popupFullscreen,
     popupFullscreenCap,
     popupImage
 } from "./vars.js";
-import {closePopup, openPopup} from "./modale.js";
-import {enableValidation} from "./validate";
+import {closePopup, inactivateButton, openPopup} from "./modale.js";
 
 // функция для открытия попап с картинкой
 
@@ -29,9 +27,10 @@ function createCard(image, title) {
     const galleryElement = galleryTemplate
         .querySelector(".gallery__element")
         .cloneNode(true);
-    galleryElement.querySelector(".gallery__image").src = image;
+    const galleryImage = galleryElement.querySelector(".gallery__image");
+    galleryImage.src = image;
     galleryElement.querySelector(".gallery__title").textContent = title;
-    galleryElement.querySelector(".gallery__image").alt = title;
+    galleryImage.alt = title;
     const heart = galleryElement.querySelector(".gallery__like");
     // добавление лайков
     heart.addEventListener("click", function () {
@@ -46,9 +45,10 @@ function createCard(image, title) {
     setImageHandler(galleryElement);
     return galleryElement;
 }
+
 // Добавление карточек
 function prependCard(image, title) {
-   const galleryElement = createCard(image, title);
+    const galleryElement = createCard(image, title);
     gallery.prepend(galleryElement);
 }
 
@@ -60,9 +60,8 @@ function handleCardFormSubmit(evt) {
     prependCard(link, name);
     evt.target.reset();
     closePopup(popupImage);
-    enableValidation(object);
+    inactivateButton(popupImage);
 }
-
 
 
 export {handleCardFormSubmit, prependCard}

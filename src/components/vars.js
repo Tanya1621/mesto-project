@@ -6,7 +6,6 @@ const spbImage = new URL('../images/spb2.jpeg', import.meta.url);
 const kazanImage = new URL('../images/kazan.jpeg', import.meta.url);
 
 
-
 const initialCards = [{
     name: "Шихан Куштау", link: kushtauImage,
 }, {
