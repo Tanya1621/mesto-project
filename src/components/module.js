@@ -54,7 +54,7 @@ function editProfileInfo(evt) {
     closePopup(popupEdit);
 }
 
-
+// блокировка кнопки
 function inactivateButton(popup) {
     const sendButton = popup.querySelector('.popup__send');
     sendButton.classList.add(object.inactiveButtonClass);
