@@ -1,4 +1,5 @@
 import {
+    addCardSubmitButton,
     fullscreenImage,
     gallery,
     galleryTemplate,
@@ -6,9 +7,14 @@ import {
     placeNameInput,
     popupFullscreen,
     popupFullscreenCap,
-    popupImage
+    popupImage,
 } from "./vars.js";
-import {closePopup, inactivateButton, openPopup} from "./modale.js";
+import {
+    closePopup,
+    inactivateButton,
+    openPopup, toggleLike, onLoading
+} from "./module.js";
+import {addCardToServer, deleteCardFromServer, getAllCards} from "./api";
 
 // функция для открытия попап с картинкой
 
@@ -23,7 +29,7 @@ function setImageHandler(element) {
     });
 }
 
-function createCard(image, title) {
+function createCard(image, title, cardId, owner, likes) {
     const galleryElement = galleryTemplate
         .querySelector(".gallery__element")
         .cloneNode(true);
@@ -33,36 +39,53 @@ function createCard(image, title) {
     galleryImage.alt = title;
     const heart = galleryElement.querySelector(".gallery__like");
     // добавление лайков
+    const likeCounter = galleryElement.querySelector('.gallery__like-counter');
+    likes.forEach((element) => {
+        if (element._id === '48ba092649dc44ea870652bd') {
+            heart.classList.add("gallery__like_active");
+        }
+    })
+    likeCounter.textContent = likes.length;
     heart.addEventListener("click", function () {
         heart.classList.toggle("gallery__like_active");
+        toggleLike(heart, cardId, likeCounter);
     });
+
     // удаление карточки
     const deleteButton = galleryElement.querySelector(".gallery__delete");
-    deleteButton.addEventListener("click", function () {
-        galleryElement.remove();
-    });
+    //проверка владельца
+    if (owner === '48ba092649dc44ea870652bd') {
+        deleteButton.addEventListener("click", function () {
+            galleryElement.remove();
+            deleteCardFromServer(cardId);
+        })
+    } else {
+        deleteButton.remove();
+    }
     // открытие попапа с изображением
     setImageHandler(galleryElement);
     return galleryElement;
 }
 
 // Добавление карточек
-function prependCard(image, title) {
-    const galleryElement = createCard(image, title);
+function prependCard(image, title, cardId, owner, likes) {
+    const galleryElement = createCard(image, title, cardId, owner, likes);
     gallery.prepend(galleryElement);
 }
 
 //  создание карточки
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
+    onLoading(true, addCardSubmitButton);
     const name = placeNameInput.value;
     const link = placeLinkInput.value;
-    prependCard(link, name);
+    addCardToServer(name, link, addCardSubmitButton);
     evt.target.reset();
     closePopup(popupImage);
     inactivateButton(popupImage);
+    getAllCards();
 }
 
 
-export {handleCardFormSubmit, prependCard}
+export {handleCardFormSubmit, prependCard, createCard}
 export {setImageHandler};

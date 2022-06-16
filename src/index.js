@@ -2,24 +2,21 @@ import "./pages/index.css"
 
 import {
     formElementImage,
-    initialCards,
     profileEditButton,
     addButton,
     popupImage,
     popupEdit,
     profileFormElement,
-    popups, object
+    popups, object, avatarFormElement, profileAvatar, popupAvatar
 } from "./components/vars";
 
-import {handleCardFormSubmit, prependCard} from "./components/card.js";
-import {initInfo, openPopup, closePopup, editProfileInfo} from "./components/modale.js";
+import {handleCardFormSubmit} from "./components/card.js";
+import {initInfo, openPopup, closePopup, editProfileInfo, editAvatar} from "./components/module.js";
 import {enableValidation} from "./components/validate.js";
+import {getAllCards, getProfileInfo} from "./components/api";
 
 formElementImage.addEventListener("submit", handleCardFormSubmit);
 
-initialCards.forEach((element) => {
-    prependCard(element.link, element.name);
-});
 
 // открытие попап c редактированием
 profileEditButton.addEventListener("click", function () {
@@ -31,6 +28,10 @@ profileEditButton.addEventListener("click", function () {
 addButton.addEventListener("click", function () {
     openPopup(popupImage);
 });
+// открытие попапа с изменением аватара
+profileAvatar.addEventListener('click', () => {
+    openPopup(popupAvatar);
+})
 
 //закрытие оверлей или крестик
 popups.forEach((popup) => {
@@ -44,8 +45,13 @@ popups.forEach((popup) => {
     })
 })
 
+getAllCards();
+getProfileInfo();
 
+//изменение инфо в профиле по принятию формы
 profileFormElement.addEventListener("submit", editProfileInfo);
+//изменение аватара по принятию формы
+avatarFormElement.addEventListener('submit', editAvatar);
 
 
 enableValidation(object);

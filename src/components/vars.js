@@ -1,25 +1,3 @@
-const kushtauImage = new URL('../images/kushtau.png', import.meta.url);
-const elbrusImage = new URL('../images/elbrus.jpeg', import.meta.url);
-const baicalImage = new URL('../images/baikal-2.jpeg', import.meta.url);
-const kalinngradImage = new URL('../images/kaliningrad.jpeg', import.meta.url);
-const spbImage = new URL('../images/spb2.jpeg', import.meta.url);
-const kazanImage = new URL('../images/kazan.jpeg', import.meta.url);
-
-
-const initialCards = [{
-    name: "Шихан Куштау", link: kushtauImage,
-}, {
-    name: "Гора Эльбрус", link: elbrusImage,
-}, {
-    name: "Озеро Байкал", link: baicalImage,
-}, {
-    name: "Город Калининград", link: kalinngradImage,
-}, {
-    name: "Город Санкт-Петербург", link: spbImage,
-}, {
-    name: "Город Казань", link: kazanImage,
-},];
-
 const popupEdit = document.querySelector(".popup_edit");
 const popupImage = document.querySelector(".popup_image");
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -38,6 +16,15 @@ const jobInput = document.querySelector(".popup__field_value_occupation");
 const profileName = document.querySelector(".profile__name");
 const profileOccupaton = document.querySelector(".profile__occupation");
 const popups = document.querySelectorAll('.popup');
+const profileAvatar = document.querySelector('.profile__edit-avatar');
+const popupAvatar = document.querySelector('.popup_avatar');
+const avatar = document.querySelector('.profile__avatar');
+const editAvatarSubmitButton = popupAvatar.querySelector('.popup__send');
+const editProfileInfoSubmitButton = popupEdit.querySelector('.popup__send');
+const profilePhoto = document.querySelector('.profile__avatar');
+const addCardSubmitButton = popupImage.querySelector('.popup__send');
+const avatarFormElement = document.querySelector('.popup__form_avatar');
+const avatarInput = document.querySelector('.popup__field_value_avatar-link');
 const object = {
     formSelector: '.popup__form',
     inputSelector: '.popup__field',
@@ -47,7 +34,6 @@ const object = {
     errorClass: 'popup__input-error_active'
 };
 export {
-    initialCards,
     popupEdit,
     popupImage,
     profileEditButton,
@@ -65,5 +51,12 @@ export {
     jobInput,
     profileName,
     profileOccupaton,
-    popups, object
+    popups,
+    object,
+    profileAvatar,
+    popupAvatar,
+    avatar,
+    editAvatarSubmitButton,
+    profilePhoto,
+    editProfileInfoSubmitButton, addCardSubmitButton, avatarFormElement, avatarInput
 }

@@ -13,19 +13,19 @@
 </header>
 <main>
     <section class="profile">
-        <img
-                src="<%=require('./images/slider_3.jpg')%>"
+        <div class="profile__edit-avatar"><img
+                src=""
                 alt="Фото профиля"
                 class="profile__avatar"
-        />
+        /></div>
         <div class="profile__info">
-            <h1 class="profile__name">Пирожок</h1>
+            <h1 class="profile__name"></h1>
             <button
                     aria-label="Редактировать"
                     type="button"
                     class="profile__edit-button"
             ></button>
-            <p class="profile__occupation">Пушистый Исследователь</p>
+            <p class="profile__occupation"></p>
         </div>
         <button
                 aria-label="Добавить"
@@ -44,7 +44,9 @@
                 <button type="button" class="gallery__delete"></button>
                 <div class="gallery__card-info">
                     <h2 class="gallery__title">Шихан Куштау</h2>
-                    <button type="button" class="gallery__like"></button>
+                    <div class="gallery__like-field">
+                        <button type="button" class="gallery__like"></button>
+                        <span class="gallery__like-counter">5</span></div>
                 </div>
             </div>
         </template>
@@ -82,6 +84,33 @@
                                 required
                         /></label>
                         <span class="popup__input-error user-occupation-error"></span>
+                    </fieldset>
+                    <button type="submit" class="popup__send">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup_avatar">
+        <div class="popup__container">
+            <button
+                    aria-label="Закрыть"
+                    type="button"
+                    class="popup__close-icon"
+            ></button>
+            <div class="popup__content">
+                <h2 class="popup__title">Обновить аватар</h2>
+                <form name="user-data" method="get" class="popup__form popup__form_avatar" novalidate>
+                    <fieldset class="popup__edit-profile">
+                        <label><input
+                                id="avatar"
+                                name="avatar-link"
+                                type="url"
+                                class="popup__field popup__field_value_avatar-link"
+                                value=""
+                                placeholder="Ссылка на картинку"
+                                required
+                        /></label>
+                        <span class="popup__input-error avatar-error"></span>
                     </fieldset>
                     <button type="submit" class="popup__send">Сохранить</button>
                 </form>
@@ -139,7 +168,7 @@
                     class="popup__close-icon"
             ></button>
             <figure class="popup_fullscreen__figure">
-                <img class="popup_fullscreen__image" alt="из карточки" src="<%=require('./images/baikal.jpeg')%>" />
+                <img class="popup_fullscreen__image" alt="из карточки" src="<%=require('./images/baikal.jpeg')%>"/>
                 <figcaption class="popup_fullscreen__image-capture">
                     Name place
                 </figcaption>

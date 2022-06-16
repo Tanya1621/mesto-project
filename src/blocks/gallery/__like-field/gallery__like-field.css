@@ -1,0 +1,5 @@
+.gallery__like-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
