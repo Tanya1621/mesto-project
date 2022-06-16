@@ -7,13 +7,14 @@ import {
     popupImage,
     popupEdit,
     profileFormElement,
-    popups, object, avatarFormElement, profileAvatar, popupAvatar
+    popups, object, avatarFormElement, profileAvatar, popupAvatar, profileName, profileOccupaton, profilePhoto
 } from "./components/vars";
 
-import {handleCardFormSubmit} from "./components/card.js";
+import {handleCardFormSubmit, prependCard} from "./components/card.js";
 import {initInfo, openPopup, closePopup, editProfileInfo, editAvatar} from "./components/module.js";
 import {enableValidation} from "./components/validate.js";
-import {getAllCards, getProfileInfo} from "./components/api";
+import {checkResponse, getAllCards, getProfileInfo} from "./components/api";
+let userId;
 
 formElementImage.addEventListener("submit", handleCardFormSubmit);
 
@@ -45,13 +46,38 @@ popups.forEach((popup) => {
     })
 })
 
-getAllCards();
-getProfileInfo();
+const getCards = getAllCards()
+    .then(checkResponse);
+
+const getInfo = getProfileInfo()
+    .then(checkResponse);
+
+
 
 //изменение инфо в профиле по принятию формы
 profileFormElement.addEventListener("submit", editProfileInfo);
 //изменение аватара по принятию формы
 avatarFormElement.addEventListener('submit', editAvatar);
 
+Promise.all([getInfo, getCards])
+    .then(([userData, cards]) => {
+        // данные пользователя
+        profileName.textContent = userData.name;
+        profileOccupaton.textContent = userData.about;
+        profilePhoto.src = userData.avatar;
+        userId = userData._id;
+        console.log(cards)
+        console.log(userData)
+        // отрисовка карточек
+        cards.forEach((object) => {
+            prependCard(object.link, object.name, object._id, object.owner._id, object.likes);
+        })
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+
+
 
 enableValidation(object);
+export {userId}

@@ -11,7 +11,7 @@ import {
     profileOccupaton,
     avatarInput
 } from "./vars.js";
-import {deleteLikeFromServer, sendLikeToServer, updateAvatar, updateProfileInfo} from "./api";
+import {checkResponse, deleteLikeFromServer, sendLikeToServer, updateAvatar, updateProfileInfo} from "./api";
 
 
 //закрытие на Esc
@@ -48,10 +48,19 @@ function initInfo() {
 function editProfileInfo(evt) {
     evt.preventDefault();
     onLoading(true, editProfileInfoSubmitButton);
-    profileName.textContent = nameInput.value;
-    profileOccupaton.textContent = jobInput.value;
-    updateProfileInfo(nameInput.value, jobInput.value, editProfileInfoSubmitButton);
-    closePopup(popupEdit);
+    updateProfileInfo(nameInput.value, jobInput.value)
+        .then(checkResponse)
+        .then(() => {
+            profileName.textContent = nameInput.value;
+            profileOccupaton.textContent = jobInput.value;
+            closePopup(popupEdit);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            onLoading(false, editProfileInfoSubmitButton)
+        })
 }
 
 // блокировка кнопки
@@ -68,18 +77,45 @@ function inactivateButton(popup) {
 const editAvatar = (evt) => {
     evt.preventDefault();
     const imageLink = avatarInput.value;
-    avatar.src = imageLink;
     onLoading(true, editAvatarSubmitButton);
-    updateAvatar(imageLink, editAvatarSubmitButton);
-    closePopup(popupAvatar);
-    avatarInput.value = '';
+    updateAvatar(imageLink)
+        .then(checkResponse)
+        .then(() => {
+            avatar.src = imageLink;
+            closePopup(popupAvatar);
+            avatarInput.value = '';
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            onLoading(false, editAvatarSubmitButton)
+        })
 }
 
 const toggleLike = (like, cardId, likeCounter) => {
-    if (like.classList.contains('gallery__like_active')) {
-        sendLikeToServer(cardId, likeCounter);
+    if (!like.classList.contains('gallery__like_active')) {
+        sendLikeToServer(cardId)
+            .then(checkResponse)
+            .then((res) => {
+                likeCounter.textContent = res.likes.length;
+                console.log(res.likes);
+                like.classList.toggle("gallery__like_active");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     } else {
-        deleteLikeFromServer(cardId, likeCounter);
+        deleteLikeFromServer(cardId)
+            .then(checkResponse)
+            .then((res) => {
+                likeCounter.textContent = res.likes.length;
+                console.log(res.likes);
+                like.classList.toggle("gallery__like_active");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 }
 

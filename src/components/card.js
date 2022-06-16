@@ -7,14 +7,15 @@ import {
     placeNameInput,
     popupFullscreen,
     popupFullscreenCap,
-    popupImage,
+    popupImage
 } from "./vars.js";
 import {
     closePopup,
     inactivateButton,
     openPopup, toggleLike, onLoading
 } from "./module.js";
-import {addCardToServer, deleteCardFromServer, getAllCards} from "./api";
+import {addCardToServer, checkResponse, deleteCardFromServer} from "./api";
+import {userId} from "../index.js";
 
 // функция для открытия попап с картинкой
 
@@ -30,6 +31,7 @@ function setImageHandler(element) {
 }
 
 function createCard(image, title, cardId, owner, likes) {
+    console.log(userId)
     const galleryElement = galleryTemplate
         .querySelector(".gallery__element")
         .cloneNode(true);
@@ -41,23 +43,30 @@ function createCard(image, title, cardId, owner, likes) {
     // добавление лайков
     const likeCounter = galleryElement.querySelector('.gallery__like-counter');
     likes.forEach((element) => {
-        if (element._id === '48ba092649dc44ea870652bd') {
+        if (element._id === userId)
+        {
             heart.classList.add("gallery__like_active");
         }
     })
     likeCounter.textContent = likes.length;
     heart.addEventListener("click", function () {
-        heart.classList.toggle("gallery__like_active");
         toggleLike(heart, cardId, likeCounter);
     });
 
     // удаление карточки
     const deleteButton = galleryElement.querySelector(".gallery__delete");
     //проверка владельца
-    if (owner === '48ba092649dc44ea870652bd') {
+    if (owner === userId)
+    {
         deleteButton.addEventListener("click", function () {
-            galleryElement.remove();
-            deleteCardFromServer(cardId);
+            deleteCardFromServer(cardId)
+                .then(checkResponse)
+                .then(() => {
+                    galleryElement.remove();
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         })
     } else {
         deleteButton.remove();
@@ -79,11 +88,19 @@ function handleCardFormSubmit(evt) {
     onLoading(true, addCardSubmitButton);
     const name = placeNameInput.value;
     const link = placeLinkInput.value;
-    addCardToServer(name, link, addCardSubmitButton);
-    evt.target.reset();
-    closePopup(popupImage);
-    inactivateButton(popupImage);
-    getAllCards();
+    addCardToServer(name, link)
+        .then(checkResponse)
+        .then(() => {
+            evt.target.reset();
+            closePopup(popupImage);
+            inactivateButton(popupImage);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            onLoading(false, addCardSubmitButton);
+        })
 }
 
 
