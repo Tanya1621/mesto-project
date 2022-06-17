@@ -4,14 +4,14 @@ import {
     editProfileInfoSubmitButton,
     jobInput,
     nameInput,
-    object,
     popupAvatar,
     popupEdit,
     profileName,
-    profileOccupaton,
-    avatarInput
+    profileOccupation,
+    avatarInput, avatarFormElement
 } from "./vars.js";
-import {checkResponse, deleteLikeFromServer, sendLikeToServer, updateAvatar, updateProfileInfo} from "./api";
+import {updateAvatar, updateProfileInfo} from "./api.js";
+import {inactivateButton, onLoading} from "./utils.js";
 
 
 //закрытие на Esc
@@ -41,7 +41,7 @@ function closePopup(popup) {
 // установка начальных данных в попапе для редактирования профиля
 function initInfo() {
     nameInput.value = profileName.textContent;
-    jobInput.value = profileOccupaton.textContent;
+    jobInput.value = profileOccupation.textContent;
 }
 
 // обновление информации в профиле
@@ -49,10 +49,10 @@ function editProfileInfo(evt) {
     evt.preventDefault();
     onLoading(true, editProfileInfoSubmitButton);
     updateProfileInfo(nameInput.value, jobInput.value)
-        .then(checkResponse)
         .then(() => {
             profileName.textContent = nameInput.value;
-            profileOccupaton.textContent = jobInput.value;
+            profileOccupation.textContent = jobInput.value;
+            inactivateButton(popupEdit);
             closePopup(popupEdit);
         })
         .catch((err) => {
@@ -61,13 +61,6 @@ function editProfileInfo(evt) {
         .finally(() => {
             onLoading(false, editProfileInfoSubmitButton)
         })
-}
-
-// блокировка кнопки
-function inactivateButton(popup) {
-    const sendButton = popup.querySelector('.popup__send');
-    sendButton.classList.add(object.inactiveButtonClass);
-    sendButton.disabled = true;
 }
 
 
@@ -79,11 +72,11 @@ const editAvatar = (evt) => {
     const imageLink = avatarInput.value;
     onLoading(true, editAvatarSubmitButton);
     updateAvatar(imageLink)
-        .then(checkResponse)
         .then(() => {
             avatar.src = imageLink;
+            inactivateButton(popupAvatar);
             closePopup(popupAvatar);
-            avatarInput.value = '';
+            avatarFormElement.reset();
         })
         .catch((err) => {
             console.log(err);
@@ -93,41 +86,7 @@ const editAvatar = (evt) => {
         })
 }
 
-const toggleLike = (like, cardId, likeCounter) => {
-    if (!like.classList.contains('gallery__like_active')) {
-        sendLikeToServer(cardId)
-            .then(checkResponse)
-            .then((res) => {
-                likeCounter.textContent = res.likes.length;
-                console.log(res.likes);
-                like.classList.toggle("gallery__like_active");
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    } else {
-        deleteLikeFromServer(cardId)
-            .then(checkResponse)
-            .then((res) => {
-                likeCounter.textContent = res.likes.length;
-                console.log(res.likes);
-                like.classList.toggle("gallery__like_active");
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }
-}
-
-
-const onLoading = (status, button) => {
-    if (status) {
-        button.textContent = 'Сохранение...'
-    } else {
-        button.textContent = 'Сохранение'
-    }
-}
 
 export {
-    closePopup, initInfo, editProfileInfo, openPopup, inactivateButton, toggleLike, onLoading, editAvatar
+    closePopup, initInfo, editProfileInfo, openPopup, onLoading, editAvatar
 }

@@ -14,7 +14,7 @@ const profileFormElement = document.querySelector(".popup__form_profile");
 const nameInput = document.querySelector(".popup__field_value_name");
 const jobInput = document.querySelector(".popup__field_value_occupation");
 const profileName = document.querySelector(".profile__name");
-const profileOccupaton = document.querySelector(".profile__occupation");
+const profileOccupation = document.querySelector(".profile__occupation");
 const popups = document.querySelectorAll('.popup');
 const profileAvatar = document.querySelector('.profile__edit-avatar');
 const popupAvatar = document.querySelector('.popup_avatar');
@@ -50,7 +50,7 @@ export {
     nameInput,
     jobInput,
     profileName,
-    profileOccupaton,
+    profileOccupation,
     popups,
     object,
     profileAvatar,

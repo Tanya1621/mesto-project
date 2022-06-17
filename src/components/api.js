@@ -4,6 +4,7 @@ const config = {
         authorization: 'f3e97b96-69af-4630-b9bf-ac09d476caea',
         'Content-Type': 'application/json'
     }
+
 }
 
 export function checkResponse(res) {
@@ -20,6 +21,7 @@ export const getAllCards = () => {
         method: 'GET',
         headers: config.headers
     })
+       .then(checkResponse);
 }
 
 export const getProfileInfo = () => {
@@ -27,6 +29,7 @@ export const getProfileInfo = () => {
         method: 'GET',
         headers: config.headers
     })
+        .then(checkResponse);
 }
 //+
 
@@ -40,6 +43,7 @@ export const updateProfileInfo = (name, occupation) => {
             about: occupation
         })
     })
+       .then(checkResponse);
 
 }
 //+
@@ -53,6 +57,7 @@ export const updateAvatar = (avatarLink) => {
             avatar: avatarLink,
         })
     })
+       .then(checkResponse);
 
 }
 //+
@@ -67,6 +72,7 @@ export const addCardToServer = (name, link) => {
             link: link
         })
     })
+        .then(checkResponse);
 }
 
 //удаление карточки с сервера
@@ -75,6 +81,7 @@ export const deleteCardFromServer = (cardId) => {
         method: 'DELETE',
         headers: config.headers
     })
+       .then(checkResponse);
 }
 //+
 
@@ -85,6 +92,7 @@ export const sendLikeToServer = (cardId) => {
         method: 'PUT',
         headers: config.headers
     })
+        .then(checkResponse);
 }
 //+
 
@@ -94,8 +102,7 @@ export const deleteLikeFromServer = (cardId) => {
         method: 'DELETE',
         headers: config.headers
     })
+      .then(checkResponse);
 
 }
 //+
-
-//Promise.all([getProfileInfo(), getAllCards()]);

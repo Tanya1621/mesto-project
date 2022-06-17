@@ -11,11 +11,34 @@ import {
 } from "./vars.js";
 import {
     closePopup,
-    inactivateButton,
-    openPopup, toggleLike, onLoading
+    openPopup, onLoading
 } from "./module.js";
-import {addCardToServer, checkResponse, deleteCardFromServer} from "./api";
+import {addCardToServer, deleteCardFromServer, deleteLikeFromServer, sendLikeToServer} from "./api.js";
 import {userId} from "../index.js";
+import {inactivateButton} from "./utils.js";
+
+//функция снятия и добавления лайка
+const toggleLike = (like, cardId, likeCounter) => {
+    if (!like.classList.contains('gallery__like_active')) {
+        sendLikeToServer(cardId)
+            .then((res) => {
+                likeCounter.textContent = res.likes.length;
+                like.classList.toggle("gallery__like_active");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    } else {
+        deleteLikeFromServer(cardId)
+            .then((res) => {
+                likeCounter.textContent = res.likes.length;
+                like.classList.toggle("gallery__like_active");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+}
 
 // функция для открытия попап с картинкой
 
@@ -31,7 +54,6 @@ function setImageHandler(element) {
 }
 
 function createCard(image, title, cardId, owner, likes) {
-    console.log(userId)
     const galleryElement = galleryTemplate
         .querySelector(".gallery__element")
         .cloneNode(true);
@@ -43,8 +65,7 @@ function createCard(image, title, cardId, owner, likes) {
     // добавление лайков
     const likeCounter = galleryElement.querySelector('.gallery__like-counter');
     likes.forEach((element) => {
-        if (element._id === userId)
-        {
+        if (element._id === userId) {
             heart.classList.add("gallery__like_active");
         }
     })
@@ -56,11 +77,9 @@ function createCard(image, title, cardId, owner, likes) {
     // удаление карточки
     const deleteButton = galleryElement.querySelector(".gallery__delete");
     //проверка владельца
-    if (owner === userId)
-    {
+    if (owner === userId) {
         deleteButton.addEventListener("click", function () {
             deleteCardFromServer(cardId)
-                .then(checkResponse)
                 .then(() => {
                     galleryElement.remove();
                 })
@@ -76,11 +95,16 @@ function createCard(image, title, cardId, owner, likes) {
     return galleryElement;
 }
 
-// Добавление карточек
-function prependCard(image, title, cardId, owner, likes) {
-    const galleryElement = createCard(image, title, cardId, owner, likes);
-    gallery.prepend(galleryElement);
+function prependCard(container, card) {
+    container.prepend(card);
 }
+
+// Добавление карточек
+function renderCard(image, title, cardId, owner, likes) {
+    const galleryElement = createCard(image, title, cardId, owner, likes);
+    prependCard(gallery, galleryElement);
+}
+
 
 //  создание карточки
 function handleCardFormSubmit(evt) {
@@ -89,20 +113,22 @@ function handleCardFormSubmit(evt) {
     const name = placeNameInput.value;
     const link = placeLinkInput.value;
     addCardToServer(name, link)
-        .then(checkResponse)
-        .then(() => {
+        .then((res) => {
             evt.target.reset();
             closePopup(popupImage);
             inactivateButton(popupImage);
+            renderCard(link, name, res._id, res.owner, res.likes)
         })
+
         .catch((err) => {
             console.log(err);
         })
         .finally(() => {
             onLoading(false, addCardSubmitButton);
         })
+
 }
 
 
-export {handleCardFormSubmit, prependCard, createCard}
+export {handleCardFormSubmit, renderCard, createCard, toggleLike}
 export {setImageHandler};
