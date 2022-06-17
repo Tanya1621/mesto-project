@@ -7,7 +7,7 @@ export function inactivateButton(popup) {
     sendButton.disabled = true;
 }
 
-//кнопка сохранить при загрузки
+//кнопка сохранить при загрузке
 export const onLoading = (status, button) => {
     if (status) {
         button.textContent = 'Сохранение...'
