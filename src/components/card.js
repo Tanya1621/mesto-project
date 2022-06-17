@@ -117,7 +117,8 @@ function handleCardFormSubmit(evt) {
             evt.target.reset();
             closePopup(popupImage);
             inactivateButton(popupImage);
-            renderCard(link, name, res._id, res.owner, res.likes)
+            renderCard(link, name, res._id, res.owner._id, res.likes)
+            console.log(res);
         })
 
         .catch((err) => {

@@ -12,6 +12,6 @@ export const onLoading = (status, button) => {
     if (status) {
         button.textContent = 'Сохранение...'
     } else {
-        button.textContent = 'Сохранение'
+        button.textContent = 'Сохранить'
     }
 }
