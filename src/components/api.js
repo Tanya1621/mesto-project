@@ -106,3 +106,29 @@ export const deleteLikeFromServer = (cardId) => {
 
 }
 //+
+
+class Api {
+    constructor({ headers, baseUrl  }) {
+        this._headers = headers;
+        this._baseUrl = baseUrl;
+
+    }
+
+    getAllCards() {
+        return fetch(`${config.baseUrl}/cards`, {
+            method: 'GET',
+            headers: config.headers
+        })
+            .then(checkResponse);
+    }
+
+    // другие методы работы с API
+}
+
+const api = new Api({
+    baseUrl: 'https://nomoreparties.co/v1/plus-cohort-11',
+    headers: {
+        authorization: 'f3e97b96-69af-4630-b9bf-ac09d476caea',
+        'Content-Type': 'application/json'
+    }
+});
