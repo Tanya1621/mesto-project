@@ -10,7 +10,7 @@ import {
     profileOccupation,
     avatarInput, avatarFormElement
 } from "./vars.js";
-import {updateAvatar, updateProfileInfo} from "./api.js";
+import {api, updateAvatar, updateProfileInfo} from "./api.js";
 import {inactivateButton, onLoading} from "./utils.js";
 
 
@@ -48,7 +48,7 @@ function initInfo() {
 function editProfileInfo(evt) {
     evt.preventDefault();
     onLoading(true, editProfileInfoSubmitButton);
-    updateProfileInfo(nameInput.value, jobInput.value)
+    api.updateProfileInfo(nameInput.value, jobInput.value)
         .then(() => {
             profileName.textContent = nameInput.value;
             profileOccupation.textContent = jobInput.value;
@@ -71,7 +71,7 @@ const editAvatar = (evt) => {
     evt.preventDefault();
     const imageLink = avatarInput.value;
     onLoading(true, editAvatarSubmitButton);
-    updateAvatar(imageLink)
+    api.updateAvatar(imageLink)
         .then(() => {
             avatar.src = imageLink;
             inactivateButton(popupAvatar);

@@ -13,7 +13,7 @@ import {
 import {handleCardFormSubmit, renderCard} from "./components/card.js";
 import {initInfo, openPopup, closePopup, editProfileInfo, editAvatar} from "./components/module.js";
 import {enableValidation} from "./components/validate.js";
-import { getAllCards, getProfileInfo} from "./components/api";
+import {api, getAllCards, getProfileInfo} from "./components/api";
 let userId;
 
 formElementImage.addEventListener("submit", (evt) => {
@@ -48,9 +48,9 @@ popups.forEach((popup) => {
     })
 })
 
-const getCards = getAllCards();
+const getCards = api.getAllCards();
 
-const getInfo = getProfileInfo();
+const getInfo = api.getProfileInfo();
 
 
 

@@ -13,14 +13,14 @@ import {
     closePopup,
     openPopup, onLoading
 } from "./module.js";
-import {addCardToServer, deleteCardFromServer, deleteLikeFromServer, sendLikeToServer} from "./api.js";
+import {api, addCardToServer, deleteCardFromServer, deleteLikeFromServer, sendLikeToServer} from "./api.js";
 import {userId} from "../index.js";
 import {inactivateButton} from "./utils.js";
 
 //функция снятия и добавления лайка
 const toggleLike = (like, cardId, likeCounter) => {
     if (!like.classList.contains('gallery__like_active')) {
-        sendLikeToServer(cardId)
+        api.sendLikeToServer(cardId)
             .then((res) => {
                 likeCounter.textContent = res.likes.length;
                 like.classList.toggle("gallery__like_active");
@@ -29,7 +29,7 @@ const toggleLike = (like, cardId, likeCounter) => {
                 console.log(err);
             })
     } else {
-        deleteLikeFromServer(cardId)
+        api.deleteLikeFromServer(cardId)
             .then((res) => {
                 likeCounter.textContent = res.likes.length;
                 like.classList.toggle("gallery__like_active");
@@ -79,7 +79,7 @@ function createCard(image, title, cardId, owner, likes) {
     //проверка владельца
     if (owner === userId) {
         deleteButton.addEventListener("click", function () {
-            deleteCardFromServer(cardId)
+            api.deleteCardFromServer(cardId)
                 .then(() => {
                     galleryElement.remove();
                 })
@@ -112,7 +112,7 @@ function handleCardFormSubmit(evt) {
     onLoading(true, addCardSubmitButton);
     const name = placeNameInput.value;
     const link = placeLinkInput.value;
-    addCardToServer(name, link)
+    api.addCardToServer(name, link)
         .then((res) => {
             evt.target.reset();
             closePopup(popupImage);
