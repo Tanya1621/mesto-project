@@ -1,4 +1,4 @@
-import {
+/*import {
     addCardSubmitButton,
     fullscreenImage,
     gallery,
@@ -14,11 +14,12 @@ import {
     openPopup, onLoading
 } from "./module.js";
 import {api, addCardToServer, deleteCardFromServer, deleteLikeFromServer, sendLikeToServer} from "./api.js";
+import {inactivateButton} from "./utils.js";*/
+
 import {userId} from "../index.js";
-import {inactivateButton} from "./utils.js";
 
 //функция снятия и добавления лайка
-const toggleLike = (like, cardId, likeCounter) => {
+/*const toggleLike = (like, cardId, likeCounter) => {
     if (!like.classList.contains('gallery__like_active')) {
         api.sendLikeToServer(cardId)
             .then((res) => {
@@ -132,4 +133,49 @@ function handleCardFormSubmit(evt) {
 
 
 export {handleCardFormSubmit, renderCard, createCard, toggleLike}
-export {setImageHandler};
+export {setImageHandler};*/
+
+export default class Card{
+    constructor(data, cardSelector) {
+    //    принять данные
+        this._template = cardSelector;
+        this._likes = data.likes;
+        this._title = data.title;
+        this._image = data.image;
+        this._link = data.link;
+        this._owner = data.owner;
+        this._handleClickLikeButton = data.handleClickLikeButton;
+        this._handleClickDeleteButton = data.handleClickLikeButton;
+        this._handleClickPicture = data.handleClickPicture;
+    //   принять селектор
+    }
+    //создать приватные методы для работы с разметкой и слушателей
+    _getElement () {
+        const newCard = document.querySelector(this._template).content.querySelector(cardSelector).cloneNode(true);
+        return newCard;
+}
+
+_setEventListeners () {
+    this._picture = this._element.querySelector(".gallery__image");
+    this._picture.addEventListener("click", () => this._handleClickPicture(this));
+    this._likeButton = this._element.querySelector(".gallery__like");
+    this.__likeButton.addEventListener("click", () => this._handleClickLikeButton(this));
+    this._deleteButton = this._element.querySelector(".gallery__delete");
+    if (this._owner === userId) {
+        this._deleteButton.addEventListener("click", () => this._handleClickDeleteButton(this));
+    }
+    else {
+        this._deleteButton.remove();
+    }
+}
+    createCard() {
+        this._element = this._getElement();
+        this._setEventListeners();
+        this._element.querySelector(".gallery__like-counter").textContent = this._likes;
+        this._element.querySelector(".gallery__image").src = this._link;
+        this._element.querySelector(".gallery__title").textContent = this._title;
+        if (this._isLiked) {
+            this._likeButton.classList.add("gallery__like_active");
+        }
+    }
+}
