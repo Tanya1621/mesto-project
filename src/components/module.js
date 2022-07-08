@@ -10,7 +10,7 @@ import {
     profileOccupation,
     avatarInput, avatarFormElement
 } from "./vars.js";
-import {api, updateAvatar, updateProfileInfo} from "./api.js";
+import {Api, updateAvatar, updateProfileInfo} from "./api.js";
 import {inactivateButton, onLoading} from "./utils.js";
 
 

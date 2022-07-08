@@ -33,6 +33,7 @@ const object = {
     inputErrorClass: 'popup__field_type_error',
     errorClass: 'popup__input-error_active'
 };
+const templateSelector = '#gallery-item';
 export {
     popupEdit,
     popupImage,
@@ -58,5 +59,5 @@ export {
     avatar,
     editAvatarSubmitButton,
     profilePhoto,
-    editProfileInfoSubmitButton, addCardSubmitButton, avatarFormElement, avatarInput
+    editProfileInfoSubmitButton, addCardSubmitButton, avatarFormElement, avatarInput, templateSelector
 }

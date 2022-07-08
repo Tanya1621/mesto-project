@@ -1,10 +1,10 @@
-import Popup from "./popup";
-export default class popupWithImage extends Popup {
-    open(picture) {
-        const popupImage = this.popup.querySelector(".gallery__image");
+import Popup from "./popup.js";
+export default class PopupWithImage extends Popup {
+    open(picture, title) {
+        const popupImage = this._popup.querySelector(".popup_fullscreen__image");
         popupImage.src = picture.src;
         popupImage.alt = picture.alt;
-        this.popup.querySelector(".gallery__title").textContent = picture.title;
+        this._popup.querySelector(".popup_fullscreen__image-capture").textContent = title;
         super.open();
     }
 }
