@@ -1,4 +1,5 @@
 import "./pages/index.css"
+
 //
 // import {
 //     formElementImage,
@@ -17,6 +18,7 @@ import "./pages/index.css"
 let userId;
 import {
     gallery,
+    profileAvatar,
     templateSelector,
     popupFullscreen,
     fullscreenImage,
@@ -99,7 +101,7 @@ import Section from "./components/section";
 
 import PopupWithForm from "./components/popupWithForm.js";
 import {inactivateButton, onLoading} from "./components/utils";
-import {closePopup} from "./components/module";
+import {closePopup, editAvatar} from "./components/module";
 
 const api = new Api({
     baseUrl: 'https://nomoreparties.co/v1/plus-cohort-11',
@@ -193,7 +195,26 @@ const createCard = (data, cardSelector) => {
 
 //popupwithform 1) avatar
 
+const submitFormHandler = (inputValues) => {
+    popupAvatar.submitButton.textContent = "Сохранение...";
+    api.updateAvatar(inputValues.link)
+    .then(() => {
+        userInfo.getUserAvatar(inputValues.link);
+        popupAvatar.close();
+    })
+    .catch((err) => alert(err))
+    .finally(() => popupAvatar.submitButton.textContent = "Сохранить");
+}
 
+const popupAvatar = new PopupWithForm (
+    ".popup_avatar", 
+    submitFormHandler
+)
+popupAvatar.setEventListeners();
+profileAvatar.addEventListener("click", () => {
+    popupAvatar.open();
+    console.log("ok");
+})
 
 
 

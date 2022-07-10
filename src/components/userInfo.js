@@ -23,7 +23,7 @@ export default class UserInfo {
         return this._id;
     }
 
-    // getUserAvatar(imageLink) {
-    //     this._userAvatar.src = imageLink;
-    // }
+    getUserAvatar(imageLink) {
+         this._userAvatar.src = imageLink;
+     }
 }
