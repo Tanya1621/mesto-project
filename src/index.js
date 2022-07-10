@@ -195,11 +195,11 @@ const createCard = (data, cardSelector) => {
 
 //popupwithform 1) avatar
 
-const submitFormHandler = (inputValues) => {
+const submitAvatarHandler = (inputValues) => {
     popupAvatar.submitButton.textContent = "Сохранение...";
-    api.updateAvatar(inputValues.link)
+    api.updateAvatar(inputValues.avatar_link)
     .then(() => {
-        userInfo.getUserAvatar(inputValues.link);
+        userInfo.getUserAvatar(inputValues.avatar_link);
         popupAvatar.close();
     })
     .catch((err) => alert(err))
@@ -208,12 +208,11 @@ const submitFormHandler = (inputValues) => {
 
 const popupAvatar = new PopupWithForm (
     ".popup_avatar", 
-    submitFormHandler
+    submitAvatarHandler
 )
 popupAvatar.setEventListeners();
 profileAvatar.addEventListener("click", () => {
     popupAvatar.open();
-    console.log("ok");
 })
 
 
