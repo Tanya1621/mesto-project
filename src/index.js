@@ -23,7 +23,7 @@ import {
     popupFullscreen,
     fullscreenImage,
     popupFullscreenCap,
-    avatarInput, editAvatarSubmitButton, avatar, avatarFormElement, profileEditButton
+    avatarInput, editAvatarSubmitButton, avatar, avatarFormElement, profileEditButton, popupImage, addButton
 } from "./components/vars.js";
 //
 // formElementImage.addEventListener("submit", (evt) => {
@@ -237,6 +237,24 @@ profileEditButton.addEventListener("click", () => {
     editInfoPopup.open();
 })
 
+const submitAddHandler = (inputValues) => {
+    addImagePopup.submitButton.textContent = "Сохранение...";
+    api.addCardToServer(inputValues.place_name, inputValues.place_link)
+    .then(() => {
+        popupWithImage.handleImage(inputValues.place_name, inputValues.place_link);
+        addImagePopup.close();
+    })
+    .catch((err) => alert(err))
+    .finally(() => addImagePopup.submitButton.textContent = "Сохранить");
+}
 
+const addImagePopup = new PopupWithForm (
+    ".popup_image",
+    submitAddHandler
+)
+addImagePopup.setEventListeners();
+addButton.addEventListener("click", () => {
+    addImagePopup.open();
+})
 
 export {userId}
