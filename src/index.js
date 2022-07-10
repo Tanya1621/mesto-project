@@ -215,21 +215,24 @@ profileAvatar.addEventListener("click", () => {
     popupAvatar.open();
 })
 
+const submitEditHandler = (inputValues) => {
+    editInfoPopup.submitButton.textContent = "Сохранение...";
+    api.updateProfileInfo(inputValues.user_name, inputValues.user_occupation)
+        .then(() => {
+            userInfo.getUserInfo(inputValues.user_name, inputValues.user_occupation);
+            editInfoPopup.close();
+        })
+        .catch((err) => alert(err))
+        .finally(() => editInfoPopup.submitButton.textContent = "Сохранить");
+}
+
 const editInfoPopup = new PopupWithForm (
     ".popup_edit",
     submitEditHandler 
 )
-
-const submitEditHandler = (inputValues) => {
-    editInfoPopup.submitButton.textContent = "Сохранение...";
-    api.updateProfileInfo(inputValues.user_name, inputValues.user_occupation)
-    .then(() => {
-        editInfoPopup.close();
-    }) 
-    .catch((err) => alert(err))
-    .finally(() => editInfoPopup.submitButton.textContent = "Сохранить");  
-}
 editInfoPopup.setEventListeners();
+
+
 profileEditButton.addEventListener("click", () => {
     editInfoPopup.open();
 })
