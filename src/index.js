@@ -23,7 +23,7 @@ import {
     popupFullscreen,
     fullscreenImage,
     popupFullscreenCap,
-    avatarInput, editAvatarSubmitButton, avatar, avatarFormElement
+    avatarInput, editAvatarSubmitButton, avatar, avatarFormElement, profileEditButton
 } from "./components/vars.js";
 //
 // formElementImage.addEventListener("submit", (evt) => {
@@ -215,9 +215,24 @@ profileAvatar.addEventListener("click", () => {
     popupAvatar.open();
 })
 
+const editInfoPopup = new PopupWithForm (
+    ".popup_edit",
+    submitEditHandler 
+)
 
-
-
+const submitEditHandler = (inputValues) => {
+    editInfoPopup.submitButton.textContent = "Сохранение...";
+    api.updateProfileInfo(inputValues.user_name, inputValues.user_occupation)
+    .then(() => {
+        editInfoPopup.close();
+    }) 
+    .catch((err) => alert(err))
+    .finally(() => editInfoPopup.submitButton.textContent = "Сохранить");  
+}
+editInfoPopup.setEventListeners();
+profileEditButton.addEventListener("click", () => {
+    editInfoPopup.open();
+})
 
 
 
