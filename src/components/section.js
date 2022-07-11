@@ -1,5 +1,3 @@
-import {templateSelector} from "./vars";
-
 export default class Section {
     constructor ({items, renderer}, containerSelector, templateSelector) {
         this._renderer = renderer;
