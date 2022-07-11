@@ -8,7 +8,8 @@ import {
     popupEdit,
     profileName,
     profileOccupation,
-    avatarInput, avatarFormElement
+    avatarInput,
+    avatarFormElement
 } from "./vars.js";
 import {Api, updateAvatar, updateProfileInfo} from "./api.js";
 import {inactivateButton, onLoading} from "./utils.js";

@@ -9,11 +9,13 @@ export default class Popup {
         this._popup.classList.remove("popup_opened");
         document.removeEventListener("keydown", this._handleClickEscBinded);
     }
+
     _handleClickEsc(evt) {
         if (evt.key === "Escape") {
             this.close();
         }
     }
+
     open() {
         this._popup.classList.add("popup_opened");
         document.addEventListener("keydown", this._handleClickEscBinded);
@@ -22,8 +24,13 @@ export default class Popup {
     _handleClickOverlay(evt) {
         if (evt.target === evt.currentTarget) this.close();
     }
+
     setEventListeners() {
-        this._popup.addEventListener("mousedown", (evt) => {this._handleClickOverlay(evt);});
-        this._closeButton.addEventListener("click", () => {this.close();});
+        this._popup.addEventListener("mousedown", (evt) => {
+            this._handleClickOverlay(evt);
+        });
+        this._closeButton.addEventListener("click", () => {
+            this.close();
+        });
     }
 }

@@ -108,7 +108,7 @@
 // //+
 
 export default class Api {
-    constructor({ headers, baseUrl }) {
+    constructor({headers, baseUrl}) {
         this._headers = headers;
         this._baseUrl = baseUrl;
 
@@ -121,7 +121,7 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`)
     }
 
-    getProfileInfo () {
+    getProfileInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
             headers: this._headers
@@ -149,7 +149,7 @@ export default class Api {
             .then((res) => this._checkResponse(res));
     }
 
-    updateProfileInfo (name, occupation) {
+    updateProfileInfo(name, occupation) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
@@ -162,7 +162,7 @@ export default class Api {
 
     }
 
-    updateAvatar (avatarLink) {
+    updateAvatar(avatarLink) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
@@ -174,14 +174,15 @@ export default class Api {
 
     }
 
-    deleteCardFromServer (cardId) {
+    deleteCardFromServer(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this._headers,
         })
             .then((res) => this._checkResponse(res));
     }
-    sendLikeToServer (cardId) {
+
+    sendLikeToServer(cardId) {
         return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
             method: 'PUT',
             headers: this._headers,
@@ -189,13 +190,14 @@ export default class Api {
             .then((res) => this._checkResponse(res));
     }
 
-    deleteLikeFromServer (cardId) {
-        return  fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    deleteLikeFromServer(cardId) {
+        return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
             method: 'DELETE',
             headers: this._headers,
         })
             .then((res) => this._checkResponse(res));
 
     }
+
     // другие методы работы с API
 }
