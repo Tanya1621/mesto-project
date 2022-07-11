@@ -178,6 +178,7 @@ Promise.all([api.getProfileInfo(), api.getAllCards()])
         // отрисовка карточек
         cards.forEach((object) => {
             createCard(object, templateSelector);
+            console.log(object);
         })
     })
     .catch((err) => {
@@ -237,24 +238,30 @@ profileEditButton.addEventListener("click", () => {
     editInfoPopup.open();
 })
 
+
+
 const submitAddHandler = (inputValues) => {
-    addImagePopup.submitButton.textContent = "Сохранение...";
+    addCardPopup.submitButton.textContent = "Сохранение...";
     api.addCardToServer(inputValues.place_name, inputValues.place_link)
-    .then(() => {
-        popupWithImage.handleImage(inputValues.place_name, inputValues.place_link);
-        addImagePopup.close();
+    .then((res) => {
+        createCard({link: inputValues.place_link, name: inputValues.place_name, likes: res.likes, _id: res._id, owner: {_id: res.owner._id}}, templateSelector);
+        addCardPopup.close();
     })
     .catch((err) => alert(err))
-    .finally(() => addImagePopup.submitButton.textContent = "Сохранить");
+    .finally(() => addCardPopup.submitButton.textContent = "Сохранить");
 }
 
-const addImagePopup = new PopupWithForm (
+
+// link, name, res._id, res.owner._id, res.likes
+const addCardPopup = new PopupWithForm (
     ".popup_image",
     submitAddHandler
 )
-addImagePopup.setEventListeners();
+addCardPopup.setEventListeners();
 addButton.addEventListener("click", () => {
-    addImagePopup.open();
+    addCardPopup.open();
 })
+
+
 
 export {userId}

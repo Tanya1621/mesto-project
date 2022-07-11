@@ -143,7 +143,7 @@ export default class Card {
         this._title = data.name;
         this._isLiked = false;
         this._link = data.link;
-        this._owner = data.owner;
+        this._owner = data.owner._id;
         this._id = data._id;
         this._handleClickLikeButton = handleClickLikeButton;
         this._handleClickDeleteButton = handleClickDeleteButton;
