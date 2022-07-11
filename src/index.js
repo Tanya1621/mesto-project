@@ -8,21 +8,22 @@ import {
     addButton,
     object,
     popupAvatar,
-    popupEdit
+    popupEdit, profileNameInput, profileName, profileOccupationInput, profileOccupation
 } from "./components/vars.js";
 
-import Api from "./components/api.js";
+import Api from "./components/Api.js";
 //api
-import Card from "./components/card.js";
+import Card from "./components/Card.js";
 
-import UserInfo from "./components/userInfo.js";
+import UserInfo from "./components/UserInfo.js";
 
 import PopupWithImage from "./components/popupWithImage.js";
-import Section from "./components/section";
+import Section from "./components/Section.js";
 
-import PopupWithForm from "./components/popupWithForm.js";
+import PopupWithForm from "./components/PopupWithForm.js";
 
-import FormValidator from "./components/validate";
+import FormValidator from "./components/FormValidator.js";
+import {onLoading} from "./components/utils.js";
 
 const api = new Api({
     baseUrl: 'https://nomoreparties.co/v1/plus-cohort-11',
@@ -89,7 +90,7 @@ const sectionCards = new Section(
         renderer: (data) => createCard(data, templateSelector)
     }
     ,
-    ".gallery"
+    ".gallery", templateSelector
 );
 
 Promise.all([api.getProfileInfo(), api.getAllCards()])
@@ -101,7 +102,6 @@ Promise.all([api.getProfileInfo(), api.getAllCards()])
         // отрисовка карточек
         cards.forEach((object) => {
             createCard(object, templateSelector);
-            console.log(object);
         })
     })
     .catch((err) => {
@@ -118,14 +118,14 @@ const createCard = (data, cardSelector) => {
 //popupwithform 1) avatar
 
 const submitAvatarHandler = (inputValues) => {
-    popupAvatarClass.submitButton.textContent = "Сохранение...";
+    onLoading(true, popupAvatarClass.submitButton);
     api.updateAvatar(inputValues.avatar_link)
         .then(() => {
             userInfo.getUserAvatar(inputValues.avatar_link);
             popupAvatarClass.close();
         })
         .catch((err) => alert(err))
-        .finally(() => popupAvatarClass.submitButton.textContent = "Сохранить");
+        .finally(() => onLoading(false, popupAvatarClass.submitButton));
 }
 
 const popupAvatarClass = new PopupWithForm(
@@ -133,24 +133,26 @@ const popupAvatarClass = new PopupWithForm(
     submitAvatarHandler
 )
 popupAvatarClass.setEventListeners();
+const popupAvatarValidator = new FormValidator(object, popupAvatar);
 profileAvatar.addEventListener("click", () => {
     popupAvatarClass.open();
+    popupAvatarValidator.enableValidation();
 })
 
-const popupAvatarValidator = new FormValidator(object, popupAvatar);
-popupAvatarValidator.enableValidation();
 
 
-//editProfile
+
+
+//2) editProfile
 const submitEditHandler = (inputValues) => {
-    editInfoPopup.submitButton.textContent = "Сохранение...";
+    onLoading(true, editInfoPopup.submitButton);
     api.updateProfileInfo(inputValues.user_name, inputValues.user_occupation)
         .then(() => {
             userInfo.getUserInfo(inputValues.user_name, inputValues.user_occupation);
             editInfoPopup.close();
         })
         .catch((err) => alert(err))
-        .finally(() => editInfoPopup.submitButton.textContent = "Сохранить");
+        .finally(() => onLoading(false, editInfoPopup.submitButton));
 }
 
 
@@ -160,19 +162,22 @@ const editInfoPopup = new PopupWithForm(
 )
 editInfoPopup.setEventListeners();
 
-
+const editInfoValidator = new FormValidator(object, popupEdit);
 profileEditButton.addEventListener("click", () => {
     editInfoPopup.open();
+    profileNameInput.value = profileName.textContent;
+    profileOccupationInput.value = profileOccupation.textContent;
+    editInfoValidator.enableValidation();
 })
 
-const editInfoValidator = new FormValidator(object, popupEdit);
-editInfoValidator.enableValidation();
 
 
-// new card popup
+
+
+// 3) new card popup
 
 const submitAddHandler = (inputValues) => {
-    addCardPopup.submitButton.textContent = "Сохранение...";
+    onLoading(true, addCardPopup.submitButton);
     api.addCardToServer(inputValues.place_name, inputValues.place_link)
         .then((res) => {
             createCard({
@@ -185,22 +190,22 @@ const submitAddHandler = (inputValues) => {
             addCardPopup.close();
         })
         .catch((err) => alert(err))
-        .finally(() => addCardPopup.submitButton.textContent = "Сохранить");
+        .finally(() => onLoading(false, addCardPopup.submitButton));
 }
 
 
-// addNewCard
 const addCardPopup = new PopupWithForm(
     ".popup_image",
     submitAddHandler
 )
 addCardPopup.setEventListeners();
+const addCardValidator = new FormValidator(object, popupImage);
 addButton.addEventListener("click", () => {
     addCardPopup.open();
+    addCardValidator.enableValidation();
 })
 
-const addCardValidator = new FormValidator(object, popupImage);
-addCardValidator.enableValidation();
+
 
 
 export {userId}
