@@ -9,3 +9,4 @@ export const onLoading = (status, button) => {
         button.textContent = 'Сохранить'
     }
 }
+

@@ -9,21 +9,21 @@ import {
     object,
     popupAvatar,
     popupEdit, profileNameInput, profileName, profileOccupationInput, profileOccupation
-} from "./components/vars.js";
+} from "./components/utils/vars.js";
 
-import Api from "./components/Api.js";
+import Api from "./components/Api";
 //api
 import Card from "./components/Card.js";
 
 import UserInfo from "./components/UserInfo.js";
 
-import PopupWithImage from "./components/popupWithImage.js";
+import PopupWithImage from "./components/PopupWithImage.js";
 import Section from "./components/Section.js";
 
 import PopupWithForm from "./components/PopupWithForm.js";
 
 import FormValidator from "./components/FormValidator.js";
-import {onLoading} from "./components/utils.js";
+import {onLoading} from "./components/utils/utils.js";
 
 const api = new Api({
     baseUrl: 'https://nomoreparties.co/v1/plus-cohort-11',

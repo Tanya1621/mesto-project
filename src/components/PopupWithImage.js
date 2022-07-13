@@ -1,4 +1,4 @@
-import Popup from "./Popup.js";
+import Popup from "./Popup";
 export default class PopupWithImage extends Popup {
     open(picture, title) {
         const popupImage = this._popup.querySelector(".popup_fullscreen__image");
