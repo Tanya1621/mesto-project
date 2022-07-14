@@ -12,6 +12,11 @@ export default class Card {
         this._handleClickDeleteButton = handleClickDeleteButton;
         this._handleClickPicture = handleClickPicture;
         this._userId = userId;
+        this._element = this._getElement();
+        this._likeButton = this._element.querySelector(".gallery__like");
+        this._likeCounter = this._element.querySelector(".gallery__like-counter");
+        this._picture = this._element.querySelector(".gallery__image");
+        this._deleteButton = this._element.querySelector(".gallery__delete");
         //   принять селектор
     }
 
@@ -21,6 +26,12 @@ export default class Card {
         return newCard;
     }
 
+    _toggleLike(result) {
+        this._likeCounter.textContent = result.likes.length;
+        this._likeButton.classList.toggle("gallery__like_active");
+    }
+
+
     _checkOwner() {
         return this._owner === this._userId;
     }
@@ -28,7 +39,7 @@ export default class Card {
 
     _setEventListeners() {
         this._picture.addEventListener("click", () => this._handleClickPicture(this._picture, this._title));
-        this._likeButton.addEventListener("click", () => this._handleClickLikeButton(this._likeButton, this._id, this._likeCounter));
+        this._likeButton.addEventListener("click", () => this._handleClickLikeButton(this._likeButton, this._id, this._toggleLike.bind(this)));
         if (this._checkOwner()) {
             this._deleteButton.addEventListener("click", () => this._handleClickDeleteButton(this._id, this._element));
         } else {
@@ -46,11 +57,6 @@ export default class Card {
     }
 
     createCard() {
-        this._element = this._getElement();
-        this._likeButton = this._element.querySelector(".gallery__like");
-        this._likeCounter = this._element.querySelector(".gallery__like-counter");
-        this._picture = this._element.querySelector(".gallery__image");
-        this._deleteButton = this._element.querySelector(".gallery__delete");
         this._setEventListeners();
         this._likeCounter.textContent = this._likes.length;
         this._picture.src = this._link;

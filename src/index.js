@@ -35,12 +35,11 @@ const api = new Api({
 
 //обработка кнопки лайка
 
-export const handleClickLikeButton = (like, cardId, likeCounter) => {
+export const handleClickLikeButton = (like, cardId, handler) => {
     if (!like.classList.contains('gallery__like_active')) {
         api.sendLikeToServer(cardId)
             .then((res) => {
-                likeCounter.textContent = res.likes.length;
-                like.classList.toggle("gallery__like_active");
+                handler(res);
             })
             .catch((err) => {
                 console.log(err);
@@ -48,8 +47,7 @@ export const handleClickLikeButton = (like, cardId, likeCounter) => {
     } else {
         api.deleteLikeFromServer(cardId)
             .then((res) => {
-                likeCounter.textContent = res.likes.length;
-                like.classList.toggle("gallery__like_active");
+                handler(res);
             })
             .catch((err) => {
                 console.log(err);
@@ -98,11 +96,7 @@ Promise.all([api.getProfileInfo(), api.getAllCards()])
         // данные пользователя
         userInfo.setUserInfo(userData);
         userId = userInfo.getUserId();
-
-        // отрисовка карточек
-        cards.forEach((object) => {
-            createCard(object, templateSelector);
-        })
+        sectionCards.renderItems(cards);
     })
     .catch((err) => {
         console.log(err);
