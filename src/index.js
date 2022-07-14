@@ -61,9 +61,9 @@ const popupWithImage = new PopupWithImage('.popup_fullscreen');
 
 function handleImage(image, title) {
     popupWithImage.open(image, title);
-    popupWithImage.setEventListeners();
-}
 
+}
+popupWithImage.setEventListeners();
 //удаление карточки
 const handleDeleteCard = (cardId, element) => {
     api.deleteCardFromServer(cardId)
@@ -110,7 +110,7 @@ Promise.all([api.getProfileInfo(), api.getAllCards()])
 
 
 const createCard = (data, cardSelector) => {
-    const card = new Card(data, cardSelector, handleClickLikeButton, handleDeleteCard, handleImage);
+    const card = new Card(data, cardSelector, handleClickLikeButton, handleDeleteCard, handleImage, userId);
     const newCardElement = card.createCard();
     sectionCards.addItem(newCardElement);
 }
@@ -120,8 +120,8 @@ const createCard = (data, cardSelector) => {
 const submitAvatarHandler = (inputValues) => {
     onLoading(true, popupAvatarClass.submitButton);
     api.updateAvatar(inputValues.avatar_link)
-        .then(() => {
-            userInfo.getUserAvatar(inputValues.avatar_link);
+        .then((data) => {
+            userInfo.setUserInfo(data);
             popupAvatarClass.close();
         })
         .catch((err) => alert(err))
@@ -136,8 +136,10 @@ popupAvatarClass.setEventListeners();
 const popupAvatarValidator = new FormValidator(object, popupAvatar);
 profileAvatar.addEventListener("click", () => {
     popupAvatarClass.open();
-    popupAvatarValidator.enableValidation();
+    popupAvatarValidator.resetValidation();
 })
+
+popupAvatarValidator.enableValidation();
 
 
 
@@ -147,9 +149,10 @@ profileAvatar.addEventListener("click", () => {
 const submitEditHandler = (inputValues) => {
     onLoading(true, editInfoPopup.submitButton);
     api.updateProfileInfo(inputValues.user_name, inputValues.user_occupation)
-        .then(() => {
-            userInfo.getUserInfo(inputValues.user_name, inputValues.user_occupation);
+        .then((data) => {
+            userInfo.setUserInfo(data);
             editInfoPopup.close();
+            console.log(data);
         })
         .catch((err) => alert(err))
         .finally(() => onLoading(false, editInfoPopup.submitButton));
@@ -165,10 +168,13 @@ editInfoPopup.setEventListeners();
 const editInfoValidator = new FormValidator(object, popupEdit);
 profileEditButton.addEventListener("click", () => {
     editInfoPopup.open();
-    profileNameInput.value = profileName.textContent;
-    profileOccupationInput.value = profileOccupation.textContent;
-    editInfoValidator.enableValidation();
+    editInfoValidator.resetValidation();
+    const {name, occupation} = userInfo.getUserInfo()
+    profileNameInput.value = name;
+    profileOccupationInput.value = occupation;
 })
+
+editInfoValidator.enableValidation();
 
 
 
@@ -202,10 +208,10 @@ addCardPopup.setEventListeners();
 const addCardValidator = new FormValidator(object, popupImage);
 addButton.addEventListener("click", () => {
     addCardPopup.open();
-    addCardValidator.enableValidation();
+    addCardValidator.resetValidation();
 })
 
-
+addCardValidator.enableValidation();
 
 
 export {userId}

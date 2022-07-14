@@ -6,10 +6,12 @@ export default class UserInfo {
         this._id = null;
     }
 
-    getUserInfo(name, occupation) {
-            this._userName.textContent = name;
-            this._userDescription.textContent = occupation;
+    getUserInfo() {
+        return {
+            name: this._userName.textContent,
+            occupation: this._userDescription.textContent}
     }
+
 
     setUserInfo(userData) {
         this._userName.textContent = userData.name;
@@ -21,7 +23,4 @@ export default class UserInfo {
         return this._id;
     }
 
-    getUserAvatar(imageLink) {
-         this._userAvatar.src = imageLink;
-     }
 }

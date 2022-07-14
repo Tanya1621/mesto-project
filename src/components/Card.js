@@ -1,7 +1,5 @@
-import {userId} from "../index.js";
-
 export default class Card {
-    constructor(data, cardSelector, handleClickLikeButton, handleClickDeleteButton, handleClickPicture) {
+    constructor(data, cardSelector, handleClickLikeButton, handleClickDeleteButton, handleClickPicture, userId) {
         //    принять данные
         this._template = cardSelector;
         this._likes = data.likes;
@@ -13,6 +11,7 @@ export default class Card {
         this._handleClickLikeButton = handleClickLikeButton;
         this._handleClickDeleteButton = handleClickDeleteButton;
         this._handleClickPicture = handleClickPicture;
+        this._userId = userId;
         //   принять селектор
     }
 
@@ -23,7 +22,7 @@ export default class Card {
     }
 
     _checkOwner() {
-        return this._owner === userId;
+        return this._owner === this._userId;
     }
 
 
@@ -40,7 +39,7 @@ export default class Card {
 
     _checkMyLike() {
         this._likes.forEach((element) => {
-            if (element._id === userId) {
+            if (element._id === this._userId) {
                 this._isLiked = true;
             }
         })
@@ -54,8 +53,9 @@ export default class Card {
         this._deleteButton = this._element.querySelector(".gallery__delete");
         this._setEventListeners();
         this._likeCounter.textContent = this._likes.length;
-        this._element.querySelector(".gallery__image").src = this._link;
+        this._picture.src = this._link;
         this._element.querySelector(".gallery__title").textContent = this._title;
+        this._element.querySelector(".gallery__image").alt = this._title;
         this._checkMyLike();
         if (this._isLiked) {
             this._likeButton.classList.add("gallery__like_active");
