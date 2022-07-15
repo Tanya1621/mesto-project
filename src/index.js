@@ -35,8 +35,8 @@ const api = new Api({
 
 //обработка кнопки лайка
 
-export const handleClickLikeButton = (like, cardId, handler) => {
-    if (!like.classList.contains('gallery__like_active')) {
+export const handleClickLikeButton = (like, cardId, handler, isLiked) => {
+    if (!isLiked) {
         api.sendLikeToServer(cardId)
             .then((res) => {
                 handler(res);
@@ -146,7 +146,6 @@ const submitEditHandler = (inputValues) => {
         .then((data) => {
             userInfo.setUserInfo(data);
             editInfoPopup.close();
-            console.log(data);
         })
         .catch((err) => alert(err))
         .finally(() => onLoading(false, editInfoPopup.submitButton));
